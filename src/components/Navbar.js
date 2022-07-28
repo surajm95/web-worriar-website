@@ -1,5 +1,6 @@
 import React from 'react'
 import { graphql, Link, useStaticQuery } from 'gatsby'
+import LoginButton from "../components/LoginButton";
 
 export default function Navbar() {
   const data = useStaticQuery(graphql`
@@ -20,6 +21,9 @@ export default function Navbar() {
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
         <Link to="/projects">Portfolio Projects</Link>
+        <Link to = "/account">My Account </Link>
+        
+         <button> <LoginButton /></button> 
       </div>
     </nav>
   )

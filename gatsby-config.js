@@ -4,7 +4,6 @@
  * See: https://www.gatsbyjs.com/docs/gatsby-config/
  * 
  */
- const path = require(`path`)
 
 
 module.exports = {
@@ -26,6 +25,39 @@ module.exports = {
         name: `images`,
         path: `${__dirname}/src/images/`,
       },
+    },
+    {
+      resolve: 'gatsby-plugin-local-search',
+      options: {
+          name: 'projects',
+          engine: 'flexsearch',
+          query: `{
+            allMarkdownRemark {
+            nodes {
+              frontmatter {
+                slug
+                title
+                thumb {
+                  childImageSharp {
+                    fluid {
+                      src
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }`,
+          ref: 'slug',
+          index: ['title'],
+          store: ['slug','title','thumb'],
+          normalizer: ({ data }) =>
+          data.allMarkdownRemark.nodes.map((node) => ({
+              title: node.frontmatter.title,
+              slug: node.frontmatter.slug,
+              thumb : node.frontmatter.thumb,
+          })),
+        },
     },
   ],
   siteMetadata: {
